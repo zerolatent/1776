@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "1776",
+    "slug": "1776",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "seventeen76",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F7F8F3"
+      }
+    }
+  }
+}
