@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1776</title>
+    <link rel="stylesheet" href="/static/styles.css?v=11" />
+  </head>
+  <body class="logged-out">
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div>
+            <strong>1776</strong>
+            <small>Rulemaking, explained</small>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div id="profileBadge" class="profile-badge workspace-only"></div>
+          <details id="settingsMenu" class="settings-menu workspace-only">
+            <summary>Settings</summary>
+            <div class="settings-panel">
+              <div>
+                <p class="eyebrow">Profile</p>
+                <p id="settingsProfile" class="settings-copy"></p>
+              </div>
+              <div class="settings-actions">
+                <button id="ingestButton" class="secondary-action" type="button">Refresh official data</button>
+                <button id="signOutButton" class="secondary-action" type="button">Sign out</button>
+              </div>
+            </div>
+          </details>
+        </div>
+      </header>
+
+      <main class="page">
+        <section id="landingPanel" class="landing-panel" aria-labelledby="landingTitle">
+          <div class="landing-hero">
+            <div class="landing-copy">
+              <p class="eyebrow">Rulemaking, with receipts</p>
+              <h1 id="landingTitle">Were the people heard?</h1>
+              <p>
+                Tribune watches public rules, explains what changed, and shows whether the official
+                record proves the public had a voice.
+              </p>
+            </div>
+          </div>
+
+          <div class="onboarding-panel" aria-label="Create a profile">
+            <div class="register-intro">
+              <p class="eyebrow">Start here</p>
+              <h2>Build your rule feed.</h2>
+              <p>Choose a lens, add your topics, and Tribune will rank the register for you.</p>
+            </div>
+            <div class="register-quick">
+              <span>Popular lenses</span>
+              <div class="persona-presets" aria-label="Example profiles">
+                <button
+                  class="persona-chip"
+                  type="button"
+                  data-persona="Retiree / senior"
+                  data-interests="Medicaid eligibility, health benefits, public assistance"
+                >
+                  Retiree
+                </button>
+                <button
+                  class="persona-chip"
+                  type="button"
+                  data-persona="Business operator"
+                  data-interests="data centers, electric utilities, water, power infrastructure"
+                >
+                  Data centers
+                </button>
+                <button
+                  class="persona-chip"
+                  type="button"
+                  data-persona="Investor / operator"
+                  data-interests="crypto, financial regulation, power usage, consumer credit"
+                >
+                  Crypto
+                </button>
+              </div>
+            </div>
+            <div class="account">
+              <input id="nameInput" autocomplete="name" placeholder="Name" />
+              <input id="emailInput" autocomplete="email" placeholder="Email" />
+              <select id="personaSelect" aria-label="Persona">
+                <option value="">Choose a persona</option>
+                <option value="Retiree / senior">Retiree / senior</option>
+                <option value="Parent / caregiver">Parent / caregiver</option>
+                <option value="Business operator">Business operator</option>
+                <option value="Advocate / researcher">Advocate / researcher</option>
+                <option value="Investor / operator">Investor / operator</option>
+              </select>
+              <input id="interestsInput" placeholder="Topics to watch, e.g. Medicaid, data centers, crypto" />
+              <button id="loginButton" type="button">Show my feed</button>
+            </div>
+            <div id="landingStatus" class="status-line" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section class="intro-panel workspace-only" aria-labelledby="introTitle">
+          <div class="intro-copy">
+            <p class="eyebrow">Personalized rule feed</p>
+            <h1 id="introTitle">Find the rules tied to your profile.</h1>
+            <p id="profileSummary">
+              Your feed is ranked by the persona and topics in your profile.
+            </p>
+          </div>
+
+          <div class="find-box" aria-label="Find a rule">
+            <label for="searchInput">Find a rule with AI</label>
+            <div class="controls ai-controls">
+              <input id="searchInput" placeholder="Try: I'm a retiree, data centers, or crypto mining" />
+              <button id="aiSearchButton" type="button">Ask AI</button>
+              <select id="typeFilter" aria-label="Rule status filter">
+                <option value="">All statuses</option>
+                <option value="Proposed">Proposed</option>
+                <option value="Adopted">Adopted</option>
+                <option value="Emergency">Emergency</option>
+                <option value="Withdrawn">Withdrawn</option>
+              </select>
+            </div>
+            <div id="feedStatus" class="status-line" aria-live="polite">Loading personalized rules...</div>
+          </div>
+        </section>
+
+        <section class="main-grid workspace-only">
+          <section class="feed-panel" aria-label="Recent rule actions">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">For you</p>
+                <h2>Relevant rule actions</h2>
+              </div>
+              <div id="feedMetrics" class="feed-summary" aria-label="Feed summary"></div>
+            </div>
+            <div id="ruleFeed" class="rule-feed"></div>
+          </section>
+
+          <section class="brief-panel" aria-label="Rule brief">
+            <div id="emptyState" class="empty-state">
+              <div class="source-visual" aria-hidden="true"></div>
+              <h2>No rule selected</h2>
+              <p>Ask AI for a topic or open a personalized rule to read the brief.</p>
+            </div>
+
+            <article id="ruleDetail" class="rule-detail hidden">
+              <div class="detail-head">
+                <div>
+                  <p id="detailAgency" class="eyebrow"></p>
+                  <h2 id="detailTitle"></h2>
+                </div>
+                <span id="detailStatus" class="pill"></span>
+              </div>
+
+              <div id="detailFacts" class="fact-row" aria-label="Rule facts"></div>
+
+              <section class="plain-brief">
+                <div class="brief-title-row">
+                  <p class="eyebrow">AI brief</p>
+                  <span id="briefStatus" class="status-line">Brief runs automatically when opened.</span>
+                </div>
+                <p id="detailSummary" class="primary-answer"></p>
+                <p id="detailWhy" class="why-line"></p>
+              </section>
+
+              <section class="heard-card">
+                <div>
+                  <p class="eyebrow">Public voice</p>
+                  <h3 id="heardSignal"></h3>
+                </div>
+                <div id="concernsList" class="concerns"></div>
+              </section>
+
+              <section class="actions-row" aria-label="Rule actions">
+                <button id="investigateButton" type="button">Refresh AI brief</button>
+                <a id="sourceLink" target="_blank" rel="noreferrer">Open official notice</a>
+                <button id="watchButton" class="secondary-action" type="button">Watch this agency</button>
+              </section>
+
+              <section id="authorityBlock" class="authority-block hidden">
+                <div class="section-head compact">
+                  <p class="eyebrow">Authority lineage</p>
+                  <span>Bill and statute references</span>
+                </div>
+                <div id="authorityList" class="authority-list"></div>
+              </section>
+
+              <details class="source-drawer">
+                <summary>Source receipts</summary>
+                <div id="sourceList" class="source-list"></div>
+              </details>
+
+              <details class="source-drawer forecast-drawer" open>
+                <summary>
+                  Forecast markets
+                  <span id="forecastHint"></span>
+                </summary>
+                <div id="forecastList" class="forecast-list"></div>
+              </details>
+            </article>
+          </section>
+        </section>
+
+        <section class="alerts-panel workspace-only" aria-label="Watchlist alerts">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Watchlist</p>
+              <h2>Follow what affects you</h2>
+            </div>
+            <button id="alertsButton" class="secondary-action" type="button">Refresh alerts</button>
+          </div>
+          <div class="watch-create">
+            <input id="watchInput" placeholder="Watch an agency, topic, or citation..." />
+            <button id="createWatchButton" type="button">Add watch</button>
+          </div>
+          <div id="alertList" class="alert-list"></div>
+        </section>
+      </main>
+    </div>
+    <script src="/static/app.js?v=11"></script>
+  </body>
+</html>
